@@ -1,0 +1,5 @@
+package ex.websocket.dto;
+
+public class ChatRoom {
+
+}

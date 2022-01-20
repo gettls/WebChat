@@ -1,0 +1,23 @@
+package ex.websocket.repository;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Repository;
+
+import ex.websocket.dto.ChatRoom;
+
+@Repository
+public class ChatRoomRepository {
+	
+	private Map<String, ChatRoom> chatRoomMap;
+	
+	@PostConstruct
+	private void init() {
+		chatRoomMap = new LinkedHashMap<>();
+	}
+	
+}

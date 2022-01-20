@@ -1,0 +1,9 @@
+package ex.websocket.service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class RedisPublisher {
+	
+}

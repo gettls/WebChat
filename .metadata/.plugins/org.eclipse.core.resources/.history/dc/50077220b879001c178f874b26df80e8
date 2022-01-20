@@ -1,0 +1,5 @@
+package ex.websocket.config;
+
+public class WebSockConfig {
+
+}

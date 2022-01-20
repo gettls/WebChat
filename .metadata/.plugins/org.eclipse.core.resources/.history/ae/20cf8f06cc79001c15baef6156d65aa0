@@ -1,0 +1,16 @@
+package ex.websocket.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+import io.lettuce.core.dynamic.annotation.Value;
+
+@Configuration
+@Profile("local")
+public class EmbeddedRedisConfig {
+	
+	@Value("${spring.redis.port}")
+	private int redisPort;
+	
+	
+}

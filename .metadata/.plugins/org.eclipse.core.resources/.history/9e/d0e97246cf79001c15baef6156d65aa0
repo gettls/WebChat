@@ -1,0 +1,5 @@
+package ex.websocket.service;
+
+public class RedisSubscriber {
+
+}

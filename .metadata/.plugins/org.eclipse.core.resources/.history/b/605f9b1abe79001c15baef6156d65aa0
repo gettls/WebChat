@@ -1,0 +1,41 @@
+package ex.websocket.repository;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Repository;
+
+import ex.websocket.dto.ChatRoom;
+import lombok.extern.slf4j.Slf4j;
+
+@Repository
+@Slf4j
+public class ChatRoomRepository {
+	
+	private Map<String, ChatRoom> chatRoomMap;
+	
+	@PostConstruct
+	private void init() {
+		chatRoomMap = new LinkedHashMap<>();
+	}
+	
+	public ChatRoom findRoomById(String roomId) {
+		return chatRoomMap.get(roomId);
+	}
+	
+	public ChatRoom createRoom(String name) {
+		
+		ChatRoom chatRoom = ChatRoom.create(name);
+		chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
+		return chatRoom;
+	}
+	
+	public List<ChatRoom> findAllRoom() {
+		return new ArrayList<ChatRoom>(chatRoomMap.values());
+	}
+}

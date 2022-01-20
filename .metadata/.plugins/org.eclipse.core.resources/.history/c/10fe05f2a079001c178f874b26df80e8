@@ -1,0 +1,9 @@
+package ex.websocket.dto;
+
+import lombok.Getter;
+
+@Getter
+public class ChatRoom {
+	
+	private String roomId;
+}

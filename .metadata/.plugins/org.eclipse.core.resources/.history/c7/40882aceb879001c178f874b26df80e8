@@ -1,0 +1,8 @@
+package ex.websocket.repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ChatRoomRepository {
+
+}

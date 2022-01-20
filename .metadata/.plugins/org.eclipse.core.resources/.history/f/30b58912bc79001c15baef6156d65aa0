@@ -1,0 +1,56 @@
+package ex.websocket.service;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ex.websocket.dto.ChatRoom;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+/*
+@Service
+
+@RequiredArgsConstructor
+@Slf4j
+public class ChatService {
+
+	private final ObjectMapper objectMapper;
+	private Map<String, ChatRoom> chatRooms = new HashMap<>();
+	
+	public ChatRoom createRoom(String name) {
+		log.info("name : {}", name);
+		String roomId = UUID.randomUUID().toString();
+		ChatRoom chatRoom = ChatRoom.builder()
+									.roomId(roomId)	
+									.name(name)
+									.build();
+		
+		log.info("chatRoom : {}", chatRoom);
+		log.info("roomId : {}",roomId);
+		chatRooms.put(roomId, chatRoom);
+		return chatRoom;
+	}
+	
+	public ChatRoom findRoomById(String roomId) {
+		return chatRooms.get(roomId);
+	}
+	
+	
+	public <T> void sendMessage(T message, WebSocketSession session) {
+		try {
+			session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+		}catch (IOException e){
+			log.error(e.getMessage(), e);
+		}
+	}
+	
+}
+
+*/

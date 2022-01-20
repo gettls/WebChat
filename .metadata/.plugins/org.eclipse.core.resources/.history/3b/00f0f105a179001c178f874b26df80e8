@@ -1,0 +1,16 @@
+package ex.websocket.dto;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.web.socket.WebSocketSession;
+
+import lombok.Getter;
+
+@Getter
+public class ChatRoom {
+	
+	private String roomId;
+	private String name;
+	private Set<WebSocketSessionk> sessions = new HashSet<>();
+}
