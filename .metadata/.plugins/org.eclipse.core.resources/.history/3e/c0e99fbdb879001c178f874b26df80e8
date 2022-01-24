@@ -1,5 +1,0 @@
-package ex.websocket.repository;
-
-public class ChatRoomRepository {
-
-}

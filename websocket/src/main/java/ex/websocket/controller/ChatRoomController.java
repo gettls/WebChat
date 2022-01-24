@@ -1,7 +1,12 @@
 package ex.websocket.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ex.websocket.dto.ChatRoom;
+import ex.websocket.dto.LoginDto;
 import ex.websocket.repository.ChatRoomRepository;
+import ex.websocket.service.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +30,24 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatRoomController {
 	
 	private final ChatRoomRepository chatRoomRepository;
+	private final JwtProvider jwtProvider;
+
+	
+	@GetMapping("/rooms")
+	@ResponseBody
+	public List<ChatRoom> room() {
+		List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
+		chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
+		return chatRooms;
+	}
+	
+	@GetMapping("/user")
+	@ResponseBody
+	public LoginDto getUserInfo() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		return LoginDto.builder().name(name).token(jwtProvider.generteToken(name)).build();
+	}
 	
 	@GetMapping("/room")
 	public String rooms(Model model) {
@@ -34,12 +59,6 @@ public class ChatRoomController {
 	public ChatRoom createRoom(@RequestParam String name) {
 		log.info("name : {}",name);
 		return chatRoomRepository.createChatRoom(name);
-	}
-	
-	@GetMapping("/rooms")
-	@ResponseBody
-	public List<ChatRoom> room() {
-		return chatRoomRepository.findAllRoom();
 	}
 	
 	@GetMapping("/room/enter/{roomId}")

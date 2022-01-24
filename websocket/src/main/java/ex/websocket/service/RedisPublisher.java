@@ -8,7 +8,7 @@ import ex.websocket.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Slf4j
 public class RedisPublisher {

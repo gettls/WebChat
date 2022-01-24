@@ -1,0 +1,56 @@
+package ex.websocket.controller;
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ex.websocket.dto.ChatMessage;
+import ex.websocket.repository.ChatRoomRepository;
+import ex.websocket.service.JwtProvider;
+import ex.websocket.service.RedisPublisher;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@RequiredArgsConstructor
+@Slf4j
+public class ChatController {
+
+	
+//	private final RedisPublisher redisPublisher;
+	private final ChatRoomRepository chatRoomRepository;
+	private final JwtProvider jwtProvider;
+	private final RedisTemplate<String, Object>
+	private final ChannelTopic channelTopic;
+	
+	/*
+	 * "/pub/chat/message" 로 들어오는 메시지들 매핑
+	 */
+	@MessageMapping("/chat/message")
+	public void message(ChatMessage chatMessage, @Header("token") String token) {
+		String nickname = jwtProvider.getUserNameFromJwt(token);
+		chatMessage.setSender(nickname);
+		if(ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
+			chatMessage.setSender("[알림]");
+			chatMessage.setMessage(nickname +" 님이 입장했습니다.");
+		}
+		redisPublisher.publish(channelTopic ,chatMessage);
+	}
+	
+	
+	/*
+	stomp 사용
+	
+	private final SimpMessageSendingOperations sendingOperations;
+	
+	@MessageMapping("chat/message")
+	public void createRoom(ChatMessage chatMessage) {
+		if(ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
+			chatMessage.setMessage(chatMessage.getSender() + " 님이 입장했습니다" );
+		}
+		sendingOperations.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
+	}
+	*/
+}

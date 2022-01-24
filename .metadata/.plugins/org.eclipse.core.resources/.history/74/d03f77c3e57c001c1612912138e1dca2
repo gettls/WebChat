@@ -1,0 +1,28 @@
+package ex.websocket.service;
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.stereotype.Service;
+
+import ex.websocket.repository.ChatRoomRepository;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class ChatService { 
+
+	private final ChannelTopic channelTopic;
+	private final RedisTemplate<String, Object> redisTemplate;
+	private final ChatRoomRepository chatRoomRepository;
+	
+	/*
+	 * destination 에서 roomId 추출
+	 */
+	public String getRoomId(String destination) {
+		int lastIndex = destination.lastIndexOf('/');
+		if(lastIndex!=-1) {
+			return destination.substring(lastIndex);
+		}
+		return "";
+	}
+}

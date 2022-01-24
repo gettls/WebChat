@@ -10,14 +10,17 @@ import org.springframework.web.socket.WebSocketSession;
 import ex.websocket.dto.ChatMessage.MessageType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ChatRoom implements Serializable{
 	
 	private static final long serialVersionUID = 6494678977089006639L;
 	
 	private String roomId;
 	private String name;
+	private long userCount;
 	
 	public static ChatRoom create(String name) {
 		ChatRoom chatRoom = new ChatRoom();
@@ -27,7 +30,7 @@ public class ChatRoom implements Serializable{
 	}
 	
 	/*
-	 * pub/sub 방식에서는 구독자 관리가 알아서 된다 broker에서 하는듯/
+	 * pub/sub 방식에서는 구독자 관리가 알아서 된다 broker에서 하는듯
 	 
 	private Set<WebSocketSession> sessions = new HashSet<>();
 	@Builder
